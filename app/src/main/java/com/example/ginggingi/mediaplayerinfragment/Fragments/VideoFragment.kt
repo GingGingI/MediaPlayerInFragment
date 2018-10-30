@@ -1,5 +1,6 @@
 package com.example.ginggingi.mediaplayerinfragment.Fragments
 
+import android.content.res.Configuration
 import android.support.v4.app.Fragment
 import android.os.Bundle
 import android.view.*
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.view_mediaplayer.*
 
 class VideoFragment: Fragment(), View.OnClickListener{
 
+    private lateinit var VideoView: RelativeLayout
     private lateinit var Addon: RelativeLayout
     private lateinit var SurfaceView: SurfaceView
     private lateinit var TitleView: TextView
@@ -23,7 +25,7 @@ class VideoFragment: Fragment(), View.OnClickListener{
     private lateinit var ScreenChangeBtn: ImageButton
     private lateinit var SeekBar: SeekBar
 
-    private lateinit var VideoPath : String
+    private var VideoPath : String = "/storage/emulated/0/Download/Ramen.mp4"
 
     private var Progress: Int = 0
     private var isFullSize: Boolean = false
@@ -40,7 +42,6 @@ class VideoFragment: Fragment(), View.OnClickListener{
         if (savedInstanceState != null && !savedInstanceState.isEmpty)
             Progress = savedInstanceState.getInt("VideoPosition")
 
-        VideoPath = "/storage/emulated/0/Download/Ramen.mp4"
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -73,6 +74,7 @@ class VideoFragment: Fragment(), View.OnClickListener{
 
     private fun ViewInit(v: View) {
         Addon = v.findViewById(R.id.Addon)
+        VideoView = v.findViewById(R.id.VideoView)
         SurfaceView = v.findViewById(R.id.SurfaceView)
         TitleView = v.findViewById(R.id.TitleView)
         NowTime = v.findViewById(R.id.CurrentPosition)
@@ -104,12 +106,19 @@ class VideoFragment: Fragment(), View.OnClickListener{
     }
 
     private fun fitFragementSize() {
+        val dMode = resources.configuration.orientation
         val vW = EZMediaplayer.getVideoWidth()
         val vH = EZMediaplayer.getVideoHeight()
 
         val sW = activity!!.windowManager.defaultDisplay.width
+        val sH = activity!!.windowManager.defaultDisplay.height
 
-            SurfaceView.holder.setFixedSize(sW, ((vH.toFloat() / vW.toFloat()) * sW.toFloat()).toInt())
+        SurfaceView.holder.setFixedSize(sW, ((vH.toFloat() / vW.toFloat()) * sW.toFloat()).toInt())
+        if (dMode == Configuration.ORIENTATION_LANDSCAPE) {
+            VideoView.layoutParams.height = RelativeLayout.LayoutParams.MATCH_PARENT
+        }else{
+            VideoView.layoutParams.height = RelativeLayout.LayoutParams.WRAP_CONTENT
+        }
     }
 
     private fun getTimes(i: Int): String {

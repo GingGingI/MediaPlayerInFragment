@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.view.WindowManager
+import android.widget.RelativeLayout
 import com.example.ginggingi.mediaplayerinfragment.Fragments.VideoFragment
 import com.example.ginggingi.mediaplayerinfragment.Interfaces.FragmentCallback
 import com.example.ginggingi.mediaplayerinfragment.Models.PermissionModels
@@ -48,7 +49,6 @@ class MainActivity : AppCompatActivity(), FragmentCallback{
 
     private fun ChkOrientation() {
         val dMode = resources.configuration.orientation
-
         if (dMode == Configuration.ORIENTATION_PORTRAIT){
             //세로모드
             window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -76,8 +76,8 @@ class MainActivity : AppCompatActivity(), FragmentCallback{
         val dMode = resources.configuration.orientation
         if (dMode == Configuration.ORIENTATION_PORTRAIT) {
             //세로
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }else{
             //가로
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT

@@ -174,6 +174,7 @@ class EZMediaplayer: AppCompatActivity,
     override fun onPrepared(mp: MediaPlayer?) {
         if (!ChkIsFirst())
             mediaPlayer.seekTo(CurrentPosition)
+
         mediaPlayer.start()
         HideAddon()
         isMediaPlayerinit = true
@@ -238,9 +239,9 @@ class EZMediaplayer: AppCompatActivity,
             Addon.visibility = View.GONE
             AddonCondition = false
 
-            params.setMargins(-50, 0, -50, -40)
+//            params.setMargins(-50, 0, -50, -40)
             Seekbar.thumb.alpha = 0
-            Seekbar.layoutParams = params
+//            Seekbar.layoutParams = params
         }
     }
     private fun ShowAddon() {
