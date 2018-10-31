@@ -101,8 +101,6 @@ class VideoFragment: Fragment(), View.OnClickListener{
         })
         EZMediaplayer.setMediaFile(VideoPath, Progress)
         EZMediaplayer.startMedia()
-
-        NowTime.setText("0 : 0")
     }
 
     private fun fitFragementSize() {
@@ -111,7 +109,6 @@ class VideoFragment: Fragment(), View.OnClickListener{
         val vH = EZMediaplayer.getVideoHeight()
 
         val sW = activity!!.windowManager.defaultDisplay.width
-        val sH = activity!!.windowManager.defaultDisplay.height
 
         SurfaceView.holder.setFixedSize(sW, ((vH.toFloat() / vW.toFloat()) * sW.toFloat()).toInt())
         if (dMode == Configuration.ORIENTATION_LANDSCAPE) {

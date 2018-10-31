@@ -3,18 +3,15 @@ package com.example.ginggingi.mediaplayerinfragment.Utils
 import android.content.Context
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Bundle
 import android.os.Handler
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.*
+import android.widget.*
 
-import android.widget.ImageButton
-import android.widget.RelativeLayout
-import android.widget.SeekBar
 import com.example.ginggingi.mediaplayerinfragment.R
 import java.io.File
+import kotlin.math.round
 
 class EZMediaplayer: AppCompatActivity,
         SurfaceHolder.Callback,
@@ -91,19 +88,19 @@ class EZMediaplayer: AppCompatActivity,
     }
 
     private fun SeekBarInit() {
-        Seekbar.max = mediaPlayer.duration/250
+        Seekbar.max = mediaPlayer.duration
         Seekbar.setOnSeekBarChangeListener(this)
         SeekBarRun()
     }
     private fun SeekBarRun() {
         seekRunnable = Runnable{
             if (mediaPlayer != null && mediaPlayer.isPlaying) {
-                Seekbar.setProgress(mediaPlayer.currentPosition/250)
+                Seekbar.setProgress(mediaPlayer.currentPosition)
                 mediaPlayerListener.getNowProgress(mediaPlayer.currentPosition)
             }
-            handler.postDelayed( seekRunnable,250)
+            handler.postDelayed( seekRunnable, 50)
         }
-        handler.postDelayed(seekRunnable, 250)
+        handler.postDelayed(seekRunnable, 50)
     }
 
     private fun AddonInit() {
@@ -175,16 +172,16 @@ class EZMediaplayer: AppCompatActivity,
         if (!ChkIsFirst())
             mediaPlayer.seekTo(CurrentPosition)
 
-        mediaPlayer.start()
         HideAddon()
         isMediaPlayerinit = true
         mediaPlayerListener.MediaInitilized()
         SeekBarInit()
+        mediaPlayer.start()
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         if (fromUser){
-            mediaPlayer.seekTo(progress*250)
+            mediaPlayer.seekTo(progress)
         }
     }
     override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -239,9 +236,9 @@ class EZMediaplayer: AppCompatActivity,
             Addon.visibility = View.GONE
             AddonCondition = false
 
-//            params.setMargins(-50, 0, -50, -40)
+            params.setMargins(DPtoPx(-15) ,0,DPtoPx(-17),DPtoPx(-11))
             Seekbar.thumb.alpha = 0
-//            Seekbar.layoutParams = params
+            Seekbar.layoutParams = params
         }
     }
     private fun ShowAddon() {
@@ -254,6 +251,12 @@ class EZMediaplayer: AppCompatActivity,
 
     fun getVideoWidth(): Int { return mediaPlayer.videoWidth }
     fun getVideoHeight(): Int { return mediaPlayer.videoHeight }
+
+    fun DPtoPx(dp: Int): Int {
+        val density = mContext.resources.displayMetrics.density
+
+        return Math.round(dp.toFloat() * density)
+    }
 
     val ChkUserTouchRunnable = Runnable {
         kotlin.run {
