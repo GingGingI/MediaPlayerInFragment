@@ -10,11 +10,11 @@
         android:id="@+id/VideoView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:background="#000">
 
         <SurfaceView
             android:id="@+id/SurfaceView"
+            android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

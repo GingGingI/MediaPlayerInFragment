@@ -76,12 +76,20 @@ class MainActivity : AppCompatActivity(), FragmentCallback{
         val dMode = resources.configuration.orientation
         if (dMode == Configuration.ORIENTATION_PORTRAIT) {
             //세로
-
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }else{
             //가로
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         }
     }
+
+    override fun AddonHided() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun AddonShowed() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 
 }

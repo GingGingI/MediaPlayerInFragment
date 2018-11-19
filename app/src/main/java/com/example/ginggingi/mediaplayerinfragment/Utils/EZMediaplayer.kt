@@ -69,13 +69,6 @@ class EZMediaplayer: AppCompatActivity,
         this.fileUri = fileUri
         this.CurrentPosition = currentPosition
     }
-    fun setMediaFile(file: File) {
-        this.fileUri = Uri.fromFile(file).toString()
-    }
-    fun setMediaFile(file: File, currentPosition: Int) {
-        this.fileUri = Uri.fromFile(file).toString()
-        this.CurrentPosition = currentPosition
-    }
 
     fun startMedia() {
         AddonInit()
@@ -96,7 +89,7 @@ class EZMediaplayer: AppCompatActivity,
         seekRunnable = Runnable{
             if (mediaPlayer != null && mediaPlayer.isPlaying) {
                 Seekbar.setProgress(mediaPlayer.currentPosition)
-                mediaPlayerListener.getNowProgress(mediaPlayer.currentPosition)
+                mediaPlayerListener.GetProgressInEverySecond(mediaPlayer.currentPosition)
             }
             handler.postDelayed( seekRunnable, 50)
         }
@@ -109,6 +102,7 @@ class EZMediaplayer: AppCompatActivity,
         handler = Handler()
         params = Seekbar.layoutParams as ViewGroup.MarginLayoutParams
     }
+
     private fun SurfaceInit() {
         mediaPlayer = MediaPlayer()
         SurfaceHolder = Surface.holder
@@ -198,8 +192,11 @@ class EZMediaplayer: AppCompatActivity,
         }
     }
 
-    fun GetVideoDuration() : Int{
+    fun GetVideoDuration() : Int {
         return mediaPlayer.duration
+    }
+    fun GetNowPosition() : Int {
+        return mediaPlayer.currentPosition
     }
 
     private fun ChkIsFirst(): Boolean {
@@ -241,6 +238,7 @@ class EZMediaplayer: AppCompatActivity,
             Seekbar.layoutParams = params
         }
     }
+
     private fun ShowAddon() {
         Addon.visibility = View.VISIBLE
         AddonCondition = true
@@ -272,7 +270,7 @@ class EZMediaplayer: AppCompatActivity,
     }
 
     interface MediaPlayerListener {
-        fun getNowProgress(progress: Int)
+        fun GetProgressInEverySecond(progress: Int)
         fun MediaInitilized()
     }
 }

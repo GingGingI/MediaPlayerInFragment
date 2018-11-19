@@ -89,7 +89,7 @@ class VideoFragment: Fragment(), View.OnClickListener{
 
     private fun MediaInit() {
         EZMediaplayer = EZMediaplayer(Addon, SurfaceView, PlayBtn, PinBtn, SeekBar, activity!!.applicationContext, object : EZMediaplayer.MediaPlayerListener {
-            override fun getNowProgress(progress: Int) {
+            override fun GetProgressInEverySecond(progress: Int) {
                 Progress = progress
                 NowTime.setText(getTimes(progress))
             }
@@ -109,11 +109,13 @@ class VideoFragment: Fragment(), View.OnClickListener{
         val vH = EZMediaplayer.getVideoHeight()
 
         val sW = activity!!.windowManager.defaultDisplay.width
+        val sH = activity!!.windowManager.defaultDisplay.height
 
-        SurfaceView.holder.setFixedSize(sW, ((vH.toFloat() / vW.toFloat()) * sW.toFloat()).toInt())
         if (dMode == Configuration.ORIENTATION_LANDSCAPE) {
+            SurfaceView.holder.setFixedSize(((vW.toFloat() / vH.toFloat()) * sH.toFloat()).toInt(), sH)
             VideoView.layoutParams.height = RelativeLayout.LayoutParams.MATCH_PARENT
         }else{
+            SurfaceView.holder.setFixedSize(sW, ((vH.toFloat() / vW.toFloat()) * sW.toFloat()).toInt())
             VideoView.layoutParams.height = RelativeLayout.LayoutParams.WRAP_CONTENT
         }
     }
